@@ -9,4 +9,7 @@ Currently in Beta, my first Git project.
 
 You will need a paid account in PVO for this to work properly, due to sending extended data.
 
-I will post the PVO setup shortly.
+PVO Setup for extended data:
+
+![alt text](https://github.com/ekul135/Powerwall2PVOutput/blob/master/ExtendedData7_8.png)
+![alt text](https://github.com/ekul135/Powerwall2PVOutput/blob/master/ExtendedData9_12.png)

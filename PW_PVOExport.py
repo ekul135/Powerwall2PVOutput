@@ -16,6 +16,7 @@ sqlite_file = 'pw.sqlite'
 pvo_host= "pvoutput.org"
 pvo_key = ""
 pvo_systemid = ""
+extData = True
 
 def setup_logging():
     log = logging.getLogger('')
@@ -156,7 +157,10 @@ try:
             pvConsumption=row[3]
             pvDate=row[1]
             pvTime=row[0]
-            pvoutz.add_status(pvDate, pvTime, power_exp=pvPower, power_imp=pvConsumption, temp=pvTemp, vdc=pvVoltage, battery_flow=pvBatteryFlow, load_power=pvLoadPower, soc=pvSOC, site_power=pvSitePower, load_voltage=pvLoadVoltage, ext_power_exp=pvPower)
+            if extData==True:
+                pvoutz.add_status(pvDate, pvTime, power_exp=pvPower, power_imp=pvConsumption, temp=pvTemp, vdc=pvVoltage, battery_flow=pvBatteryFlow, load_power=pvLoadPower, soc=pvSOC, site_power=pvSitePower, load_voltage=pvLoadVoltage, ext_power_exp=pvPower)
+            else:
+                pvoutz.add_status(pvDate, pvTime, power_exp=pvPower, power_imp=pvConsumption, temp=pvTemp, vdc=pvVoltage)
     else:
         logger.info("No data returned")               
 

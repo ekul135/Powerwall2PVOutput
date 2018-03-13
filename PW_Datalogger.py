@@ -1,18 +1,16 @@
 #!/usr/bin/env python
 import time
-import PW_Helper
+import PW_Helper as hlp
+import PW_Config as cfg
 
-sqlite_file = "pw.sqlite"
-PowerwallIP = ""
-log_file="datalogger.log"
-
-PW_Helper.setup_logging(log_file)
-logger = PW_Helper.logging.getLogger(__name__)
+hlp.setup_logging(cfg.log_file)
+logger = hlp.logging.getLogger(__name__)
 logger.info('Start PVOutput datalogger')
+
 while True:
     try:
-    	pw=PW_Helper.getPowerwallData(PowerwallIP)
-        soc=PW_Helper.getPowerwallSOCData(PowerwallIP)
+    	pw=hlp.getPowerwallData(cfg.PowerwallIP)
+        soc=hlp.getPowerwallSOCData(cfg.PowerwallIP)
         if (pw!=False and soc!=False):
             lpvPower=float(pw['solar']['instant_power'])
             lpvVoltage=float(pw['solar']['instant_average_voltage'])
@@ -22,7 +20,7 @@ while True:
             lpvLoadVoltage=float(pw['load']['instant_average_voltage'])
             lpvSOC=float(soc['percentage'])
             values=(lpvPower,0,0,lpvVoltage,lpvBatteryFlow,lpvLoadPower,lpvSOC,lpvSitePower,lpvLoadVoltage)
-            PW_Helper.insertdb(sqlite_file, values)
+            hlp.insertdb(cfg.sqlite_file, values)
         else:
             logger.info('No data received, retrying')
         time.sleep(5)

@@ -7,10 +7,12 @@ import os
 import json
 import sys
 import psycopg2
+import sqlite3
 import logging
 from logging.handlers import RotatingFileHandler
 from logging import handlers
-import sqlite3
+
+logger = logging.getLogger(__name__)
 
 def setup_logging(log_file):
     log = logging.getLogger('')
@@ -50,14 +52,27 @@ def get_sqlite_data(sqlite_file, sqldate):
         logger.info("get_sqlite_data: " + str(e))
         return False
 
-    return rows        
+    return rows
+
+def delete_sqlite_data(sqlite_file, days):
+    try:
+        conn = sqlite3.connect(sqlite_file)
+        c = conn.cursor()
+        sql="DELETE FROM pw WHERE LogDate < DATE('now', '%s" % "-"+str(days)+" days')"
+        c.execute(sql)
+        conn.commit()
+        conn.close()
+    except StandardError as e:
+        logger.info("delete_sqlite_data: " + str(e))
+        return False
 
 def avg(l):
     return sum(l,0.00)/len(l) 
 
 def getPowerwallData(PowerwallIP):
     try:
-        response = urllib.urlopen('http://'+PowerwallIP+'/api/meters/aggregates')
+        #response = urllib.urlopen('http://'+PowerwallIP+'/api/meters/aggregates')
+        response = urllib.urlopen("file:////home/ekul/Desktop/aggregates.txt")
         webz = response.read()
     	stuff = json.loads(webz)
     	return stuff
@@ -67,7 +82,8 @@ def getPowerwallData(PowerwallIP):
 
 def getPowerwallSOCData(PowerwallIP):
     try:   
-        response = urllib.urlopen('http://'+PowerwallIP+'/api/system_status/soe')
+        #response = urllib.urlopen('http://'+PowerwallIP+'/api/system_status/soe')
+        response = urllib.urlopen("file:////home/ekul/Desktop/soe.txt")
         webz = response.read()
         soc = json.loads(webz)
         return soc

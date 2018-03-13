@@ -71,8 +71,7 @@ def avg(l):
 
 def getPowerwallData(PowerwallIP):
     try:
-        #response = urllib.urlopen('http://'+PowerwallIP+'/api/meters/aggregates')
-        response = urllib.urlopen("file:////home/ekul/Desktop/aggregates.txt")
+        response = urllib.urlopen('http://'+PowerwallIP+'/api/meters/aggregates')
         webz = response.read()
     	stuff = json.loads(webz)
     	return stuff
@@ -82,8 +81,7 @@ def getPowerwallData(PowerwallIP):
 
 def getPowerwallSOCData(PowerwallIP):
     try:   
-        #response = urllib.urlopen('http://'+PowerwallIP+'/api/system_status/soe')
-        response = urllib.urlopen("file:////home/ekul/Desktop/soe.txt")
+        response = urllib.urlopen('http://'+PowerwallIP+'/api/system_status/soe')
         webz = response.read()
         soc = json.loads(webz)
         return soc

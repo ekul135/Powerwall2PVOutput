@@ -19,7 +19,7 @@ while True:
             lpvSitePower=float(pw['site']['instant_power'])
             lpvLoadVoltage=float(pw['load']['instant_average_voltage'])
             lpvSOC=float(soc['percentage'])
-            values=(lpvPower,0,0,lpvVoltage,lpvBatteryFlow,lpvLoadPower,lpvSOC,lpvSitePower,lpvLoadVoltage)
+            values=(lpvPower,lpvLoadPower,0,lpvVoltage,lpvBatteryFlow,lpvLoadPower,lpvSOC,lpvSitePower,lpvLoadVoltage)
             hlp.insertdb(cfg.sqlite_file, values)
         else:
             logger.info('No data received, retrying')

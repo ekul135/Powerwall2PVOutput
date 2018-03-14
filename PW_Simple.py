@@ -46,7 +46,7 @@ while True:
             if (pvPower<=30):
                 pvPower=0
             pvTemp=0
-            pvConsumption=0
+            pvConsumption=pvLoadPower
             pwdate=datetime.datetime.now()
             pvDate=pwdate.strftime("%Y%m%d")
             pvTime=pwdate.strftime("%H:%M")

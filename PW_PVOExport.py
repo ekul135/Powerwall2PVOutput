@@ -26,8 +26,12 @@ try:
             pvSOC=row[8]
             if (pvPower<=30):
                 pvPower=0
+            if (pvLoadPower<0):
+                pvLoadPower=0    
             pvTemp=row[4]
             pvConsumption=row[3]
+            if (pvConsumption<0):
+                pvConsumption=0
             pvDate=row[1]
             pvTime=row[0]
             if cfg.extData==True:

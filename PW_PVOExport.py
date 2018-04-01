@@ -49,6 +49,6 @@ except Exception as err:
     logger.info("[ERROR] %s" % err)
 
 #clean up db
-hlp.delete_sqlite_data(cfg.sqlite_file, cfg.retain_days)
+#hlp.delete_sqlite_data(cfg.sqlite_file, cfg.retain_days)
 
 logger.info('End PVOutput export')

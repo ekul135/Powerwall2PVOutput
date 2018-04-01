@@ -31,6 +31,7 @@ def insertdb(sqlite_file, values):
     try:
         conn = sqlite3.connect(sqlite_file)
         c = conn.cursor()
+        c.execute("PRAGMA journal_mode=wal")
         sql = "INSERT INTO pw VALUES(CURRENT_TIMESTAMP,?,?,?,?,?,?,?,?,?)"
         c.execute(sql, (values))
         conn.commit()
@@ -43,6 +44,7 @@ def get_sqlite_data(sqlite_file, sqldate):
     try:
         conn = sqlite3.connect(sqlite_file)
         c = conn.cursor()
+        c.execute("PRAGMA journal_mode=wal")
         sql="SELECT Date, Time, Power,Consumption,Temperature,Voltage,BatteryFlow,LoadPower,SOC,SitePower,LoadVoltage FROM View_pw WHERE LogDate>'%s'" % sqldate
         c.execute(sql)
         rows = c.fetchall()
@@ -58,6 +60,7 @@ def delete_sqlite_data(sqlite_file, days):
     try:
         conn = sqlite3.connect(sqlite_file)
         c = conn.cursor()
+        c.execute("PRAGMA journal_mode=wal")
         sql="DELETE FROM pw WHERE LogDate < DATE('now', '%s" % "-"+str(days)+" days')"
         c.execute(sql)
         conn.commit()

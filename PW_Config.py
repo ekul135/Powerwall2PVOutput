@@ -8,4 +8,4 @@ log_file = "pvo.log"
 
 #only needed if using datalogger
 sqlite_file = "pw.sqlite"
-retain_days = "30" #days to retain data in db, use 0 to not delete
+retain_days = "30" #days to retain data in db

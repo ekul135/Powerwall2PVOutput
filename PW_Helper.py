@@ -4,6 +4,7 @@ import time
 import urllib
 import httplib
 import os
+import ssl
 import json
 import sys
 import psycopg2
@@ -13,6 +14,9 @@ from logging.handlers import RotatingFileHandler
 from logging import handlers
 
 logger = logging.getLogger(__name__)
+
+if (not os.environ.get('PYTHONHTTPSVERIFY', '') and getattr(ssl, '_create_unverified_context', None)):
+    ssl._create_default_https_context = ssl._create_unverified_context
 
 def setup_logging(log_file):
     log = logging.getLogger('')
@@ -74,7 +78,7 @@ def avg(l):
 
 def getPowerwallData(PowerwallIP):
     try:
-        response = urllib.urlopen('http://'+PowerwallIP+'/api/meters/aggregates')
+        response = urllib.urlopen('https://'+PowerwallIP+'/api/meters/aggregates')
         webz = response.read()
     	stuff = json.loads(webz)
     	return stuff
@@ -84,7 +88,7 @@ def getPowerwallData(PowerwallIP):
 
 def getPowerwallSOCData(PowerwallIP):
     try:   
-        response = urllib.urlopen('http://'+PowerwallIP+'/api/system_status/soe')
+        response = urllib.urlopen('https://'+PowerwallIP+'/api/system_status/soe')
         webz = response.read()
         soc = json.loads(webz)
         return soc
